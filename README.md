@@ -35,6 +35,24 @@ alias vimdiff="nvim -d"
 这样在 shell 里继续使用 `vim`、`vi`、`vimdiff` 时，实际都会落到
 Neovim。
 
+如果希望 `git difftool` 默认也直接走 Neovim，可执行：
+
+```zsh
+git config --global diff.tool nvim
+git config --global difftool.nvim.cmd 'nvim -d "$LOCAL" "$REMOTE"'
+```
+
+其中前者把默认 diff tool 设为 `nvim`，后者定义 `nvim` 这个
+difftool 实际执行 `nvim -d "$LOCAL" "$REMOTE"`。
+
+这样之后直接执行 `git difftool` 即可；如果只设置第二条，则需要使用
+`git difftool -t nvim`。
+
+当前配置里，`nvim -d` 或 `git difftool` 启动时会自动切到
+`github_light_default` 浅色主题，并把 diff filler 保持为空白，同时将
+`DiffAdd` / `DiffChange` / `DiffDelete` / `DiffText` 调整为更接近
+GitHub 的浅色对比风格，便于比对 diff。
+
 ## 依赖与约定
 
 | 项目 | 说明 |
