@@ -22,6 +22,19 @@
 | 同步插件 | `:Lazy sync` |
 | 查看状态 | `:Lazy` |
 
+如果本机 Neovim 是手动放在 `/opt/nvim-linux-x86_64/bin`，可在
+`~/.zshrc` 底部补上：
+
+```zsh
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+alias vim="nvim"
+alias vi="nvim"
+alias vimdiff="nvim -d"
+```
+
+这样在 shell 里继续使用 `vim`、`vi`、`vimdiff` 时，实际都会落到
+Neovim。
+
 ## 依赖与约定
 
 | 项目 | 说明 |
