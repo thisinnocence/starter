@@ -62,11 +62,45 @@ GitHub 的浅色对比风格，便于比对 diff。
 | 行号 | 默认绝对行号 |
 | 编码 | 保留中文编码回退 |
 | tags | 使用 `./tags;,tags` |
+| tags 工具 | 需要自行安装 `ctags`，建议使用 Universal Ctags |
 | CPP 支持 | `clangd` 需自己安装，不交给 Mason 自动安装 |
 | Rust 支持 | 已导入 LazyVim Rust extra |
 | Rust 工具 | 自备 `rustup`、`cargo`、`rustc`、`rust-analyzer` |
 | Rust 调试 | `codelldb` 由 Mason 安装 |
 | Markdown | 保持原始文本视图，关闭 conceal |
+
+## 无 LSP 时的 tags 工作流
+
+如果当前语言没有 LSP 支持，或项目里暂时不想配 LSP，可改用 `ctags`
+维护的 `tags` 文件做跳转和查找。
+
+先确认本机已有 `ctags`：
+
+```zsh
+ctags --version
+```
+
+建议看到的是 Universal Ctags。然后在项目根目录生成 `tags` 文件：
+
+```zsh
+ctags -R .
+```
+
+生成后，这份配置会按 `./tags;,tags` 查找 `tags` 文件，也就是优先使用当前
+目录的 `tags`，找不到时再向上级目录查找。
+
+没有 LSP 时可这样用：
+
+| 用法 | 说明 |
+| --- | --- |
+| `,ft` | 打开 tags 列表，适合在项目里筛选符号 |
+| `<C-]>` | 光标停在符号上时跳到对应 tag |
+| `<C-t>` | 从 tag 跳转返回 |
+| `:tag name` | 直接跳到指定 tag |
+| `:tselect name` | tag 重名时先列出候选再选择 |
+
+需要注意：当前的 `gd` 在没有 LSP 时回退的是 Vim 原生 `gd`，更偏向当前文件内
+的本地定义跳转；跨文件符号跳转仍建议使用 `,ft`、`<C-]>` 或 `:tag`。
 
 ## 对 LazyVim 的定制修改
 
